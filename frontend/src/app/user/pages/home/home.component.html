@@ -1,0 +1,7 @@
+<div class="lg:w-[80%] mx-auto my-6">
+  <div class="flex flex-wrap flex-1 justify-center gap-8">
+    @for (product of products; track product?._id) {
+    <app-product [product]="product" />
+    }
+  </div>
+</div>

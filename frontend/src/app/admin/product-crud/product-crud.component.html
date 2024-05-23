@@ -1,0 +1,117 @@
+<section class="bg-white dark:bg-gray-900 max-h-[90vh]">
+  <div
+    class="bg-white dark:bg-gray-900 flex flex-col items-center justify-center mx-auto marker py-8 px-4 max-w-2xl"
+  >
+    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white w-full">
+      {{ data ? "Update" : "Add New" }} product
+    </h2>
+    <form class="w-full" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        <div class="sm:col-span-2">
+          <label for="name" class="input-label">Product Name</label>
+          <input
+            type="text"
+            id="name"
+            class="input-field"
+            placeholder="Type product name"
+            formControlName="name"
+          />
+        </div>
+        <div class="w-full">
+          <label for="brand" class="input-label">Brand</label>
+          <input
+            type="text"
+            id="brand"
+            class="input-field"
+            placeholder="Product brand"
+            formControlName="brand"
+          />
+        </div>
+
+        <div>
+          <label for="category" class="input-label">Category</label>
+          <select id="category" class="input-field" formControlName="category">
+            <option selected="" disabled>Select category</option>
+            @for (item of categories; track $index) {
+
+            <option [value]="item._id">{{ item.name }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="actualPrice" class="input-label">Actual Price</label>
+          <input
+            type="number"
+            formControlName="actualPrice"
+            id="actualPrice"
+            class="input-field"
+            placeholder="$2999"
+            required=""
+          />
+        </div>
+        <div class="w-full">
+          <label for="discountedPrice" class="input-label"
+            >Discounted Price</label
+          >
+          <input
+            type="number"
+            formControlName="discountedPrice"
+            id="discountedPrice"
+            class="input-field"
+            placeholder="$2999"
+          />
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="description" class="input-label">Description</label>
+          <textarea
+            id="description"
+            rows="5"
+            class="input-field"
+            placeholder="Your description here"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div formArrayName="images" class="sm:col-span-2">
+          <div
+            class="mt-4"
+            *ngFor="let image of images.controls; let i = index"
+          >
+            <label for="image{{ i }}" class="input-label"
+              >Image url {{ i + 1 }}:</label
+            >
+            <input
+              type="text"
+              class="input-field"
+              [id]="'image' + i"
+              [formControlName]="i"
+            />
+            <button
+              class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800"
+              (click)="removeImage(i)"
+            >
+              Remove
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+            (click)="addImageControl()"
+          >
+            Add Image
+          </button>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="mt-4 w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:cursor-not-allowed disabled:hover:bg-blue-600 dark:disabled:hover:bg-blue-600"
+        [disabled]="productForm.invalid"
+      >
+        @if(loader) { Loading... }@else {
+        {{ data ? "Update" : "Add" }} Product }
+      </button>
+    </form>
+  </div>
+</section>

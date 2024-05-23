@@ -1,0 +1,30 @@
+<button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <svg
+    class="w-5 h-5"
+    aria-hidden="true"
+    fill="currentColor"
+    viewbox="0 0 20 20"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+    />
+  </svg>
+</button>
+<mat-menu
+  #menu="matMenu"
+  class="bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+>
+  <button
+    class="w-full block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+    (click)="editCategory()"
+  >
+    <span>Edit</span>
+  </button>
+  <button
+    class="w-full block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+    (click)="deleteCategory()"
+  >
+    <span>Delete</span>
+  </button>
+</mat-menu>

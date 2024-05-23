@@ -1,0 +1,81 @@
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div class="flex flex-col items-center justify-center mx-auto">
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="relative p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          {{ data ? "Update" : "Add New" }} Category
+        </h1>
+        <button
+          (click)="onNoClick()"
+          class="cursor-pointer w-3 h-3 absolute top-2 right-5 text-ga dark:fill-white"
+        >
+          <img src="../../../assets/x-symbol.svg" alt="cancel" />
+        </button>
+        <form
+          class="space-y-4 md:space-y-6"
+          [formGroup]="categoryForm"
+          (ngSubmit)="submitCategory()"
+        >
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Category</label
+            >
+            <input
+              type="text"
+              name="category"
+              id="category"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="category.."
+              formControlName="name"
+            />
+            @if (categoryForm.get('name')?.hasError('required') &&
+            categoryForm.get('name')?.touched) {
+            <div class="text-xs px-2 text-red-500">
+              <span>Name is required</span>
+            </div>
+            }
+          </div>
+          <div class="sm:col-span-2">
+            <label
+              for="description"
+              class="flex justify-between mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              ><span>Description</span>
+              <span class="text-gray-400 text-xs"
+                >{{ categoryForm.get("description")?.value.length }}/300</span
+              ></label
+            >
+            <textarea
+              id="description"
+              rows="5"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Category description..."
+              formControlName="description"
+              maxlength="300"
+            ></textarea>
+            @if (categoryForm.get('description')?.hasError('required') &&
+            categoryForm.get('description')?.touched) {
+            <div class="text-xs px-2 text-red-500">
+              <span>Description is required</span>
+            </div>
+            }
+          </div>
+          <button
+            type="submit"
+            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:cursor-not-allowed disabled:hover:bg-blue-600 dark:disabled:hover:bg-blue-600"
+            [disabled]="categoryForm.invalid"
+          >
+            @if(loader) { Loading... }@else {
+            {{ data ? "Update" : "Add" }}
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
