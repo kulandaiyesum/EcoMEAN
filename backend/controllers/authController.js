@@ -1,7 +1,10 @@
 const bcrypt = require("bcrypt");
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
-const { generateToken } = require("../utils/generateToken");
+const {
+  generateToken,
+  generateTokenAndSetCookie,
+} = require("../utils/generateToken");
 const {
   sendVerificationEmailForRegisteredUser,
   sendForgotPasswordMail,
@@ -44,7 +47,7 @@ const login = async (req, res) => {
     if (!user.verified) {
       const token = generateToken({ userId: user._id, role: user.role }, "30m");
       sendVerificationEmailForRegisteredUser(user, token);
-      return res.status(401).send({
+      return res.status(403).send({
         message:
           "Before logging in, please verify your email by clicking the link sent to your inbox",
       });
@@ -53,14 +56,14 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).send({ message: "Invalid password" });
     }
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.jwtSecretKey,
-      {
-        expiresIn: "7d",
-      }
-    );
-    res.status(200).json({ token, role: user.role });
+
+    generateTokenAndSetCookie(user._id, user.role, res);
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+    });
   } catch (error) {
     res.status(500).send({ message: "Error logging in" });
   }
@@ -116,6 +119,15 @@ const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Error resetting password" });
   }
 };
+const logout = (req, res) => {
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error in logout controller", error.message);
+    res.status(500).json({ message: "Internal sever error" });
+  }
+};
 
 module.exports = {
   register,
@@ -123,4 +135,5 @@ module.exports = {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  logout,
 };

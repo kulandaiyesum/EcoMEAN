@@ -24,7 +24,7 @@ const sendVerificationEmailForRegisteredUser = (user, token) => {
     </div>`;
 
   transporter.sendMail({
-    from: { name: "mk tech", address: process.env.SMTP_USERNAME },
+    from: { name: "EcoMEAN", address: process.env.SMTP_USERNAME },
     to: user.email,
     subject: "Account Verification",
     html: htmlContent,
@@ -45,7 +45,7 @@ const sendForgotPasswordMail = (user, token) => {
         <p>The Team</p>
     </div>`;
   transporter.sendMail({
-    from: { name: "mk tech", address: process.env.SMTP_USERNAME },
+    from: { name: "EcoMEAN", address: process.env.SMTP_USERNAME },
     to: user.email,
     subject: "Forgot Password",
     html: htmlContent,

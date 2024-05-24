@@ -23,15 +23,13 @@ export class LoginComponent {
     if (form.valid) {
       this.authService.login(form.value).subscribe({
         next: (res: any) => {
-          this.userAuthService.setToken(res?.token);
-          this.userAuthService.setRole(res?.role);
+          this.userAuthService.setUser(res);
           const role = res.role;
           if (role === 'ADMIN') {
             this.route.navigate(['admin']);
           } else {
             this.route.navigate(['home']);
           }
-          this.userAuthService.getUserByToken();
         },
         error: (err: HttpErrorResponse) => {
           Swal.fire({

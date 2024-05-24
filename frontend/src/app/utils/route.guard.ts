@@ -5,7 +5,7 @@ import { CanActivateFn, Router } from '@angular/router';
 export const routeGuard: CanActivateFn = (route, state) => {
   const userAuthService = inject(UserAuthService);
   const router = inject(Router);
-  if (userAuthService.getToken() !== null) {
+  if (userAuthService.getUser() !== null) {
     const role = route.data['role'] as string;
     if (role) {
       const match = userAuthService.roleMatch(role);

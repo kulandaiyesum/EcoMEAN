@@ -22,18 +22,18 @@ export const routes: Routes = [
     component: UserComponent,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'Home' },
+      { path: 'home', component: HomeComponent, title: 'Home - EcoMEAN' },
       {
         path: 'contact-us',
         component: ContactUsComponent,
-        title: 'Contact Us',
+        title: 'Contact Us - EcoMEAN',
       },
       {
         path: 'cart',
         component: CartComponent,
-        title: 'Cart',
-        // canActivate: [routeGuard],
-        // data: { role: 'USER' },
+        title: 'Cart - EcoMEAN',
+        canActivate: [routeGuard],
+        data: { role: 'USER' },
       },
     ],
   },

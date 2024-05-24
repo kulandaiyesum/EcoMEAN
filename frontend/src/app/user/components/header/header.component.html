@@ -103,24 +103,26 @@
             <a
               routerLink="home"
               routerLinkActive="lg:text-blue-700 text-white dark:text-white bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-600"
-              class="block py-2 pr-4 pl-3 text-gray-700 rounded border-b lg:bg-transparent lg:p-0 dark:text-gray-400 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+              class="block py-2 pr-4 pl-3 text-gray-700 rounded border-b lg:bg-transparent lg:p-0 dark:text-gray-400  lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
               >Home</a
             >
           </li>
+          @if (isUser()) {
           <li>
             <a
               routerLink="cart"
-              routerLinkActive="lg:text-blue-700 dark:text-white  bg-blue-600 dark:hover:bg-blue-600"
-              class="block py-2 pr-4 pl-3 text-gray-700 rounded border-b lg:bg-transparent lg:p-0 dark:text-gray-400 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+              routerLinkActive="lg:text-blue-700 text-white dark:text-white bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-600"
+              class="block py-2 pr-4 pl-3 text-gray-700 rounded border-b lg:bg-transparent lg:p-0 dark:text-gray-400  lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
               >Add To Cart</a
             >
           </li>
+          }
 
           <li>
             <a
               routerLink="contact-us"
               routerLinkActive="lg:text-blue-700 text-white dark:text-white bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-600"
-              class="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-gray-400 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+              class="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-gray-400  lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
               >Contact</a
             >
           </li>

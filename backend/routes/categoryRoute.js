@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const categoryController = require("../controllers/categoryController");
-const verifyJWT = require("../middleware/verifyJWT");
+const { protectRoute } = require("../middleware/verifyJWT");
 const verifyUserRole = require("../middleware/verifyUserRole");
 
 router
   .route("/category")
-  .post(verifyJWT, verifyUserRole("ADMIN"), categoryController.createCategory);
+  .post(
+    protectRoute,
+    verifyUserRole("ADMIN"),
+    categoryController.createCategory
+  );
 
 router
   .route("/category/:id")
-  .all(verifyJWT, verifyUserRole("ADMIN"))
+  .all(protectRoute, verifyUserRole("ADMIN"))
   .put(categoryController.updateCategory)
   .delete(categoryController.deleteCategory);
 
@@ -18,7 +22,7 @@ router
   .route("/categories")
   .get(categoryController.getCategories)
   .post(
-    verifyJWT,
+    protectRoute,
     verifyUserRole("ADMIN"),
     categoryController.addManyCategories
   );

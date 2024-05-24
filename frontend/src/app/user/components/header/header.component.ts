@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../../services/theme.service';
+import { User } from '../../../model/user';
 
 @Component({
   selector: 'app-header',
@@ -15,18 +16,11 @@ import { ThemeService } from '../../../services/theme.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   hideMenu: boolean = true;
   userSubscription: Subscription = new Subscription();
-  user: any = {};
+  user: User | null = null;
   private userAuthService = inject(UserAuthService);
   private themeService = inject(ThemeService);
   ngOnInit(): void {
-    if (localStorage.getItem('token')) {
-      this.userAuthService.getUserByToken().subscribe();
-      this.userSubscription = this.userAuthService.userObserver$.subscribe(
-        (user: any) => {
-          this.user = user;
-        }
-      );
-    }
+    this.user = this.userAuthService.getUser();
   }
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();

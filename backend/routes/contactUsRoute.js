@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const contactUsController = require("../controllers/contactUsController");
-const verifyJWT = require("../middleware/verifyJWT");
+const { protectRoute } = require("../middleware/verifyJWT");
 const verifyUserRole = require("../middleware/verifyUserRole");
 
 router
   .route("/")
   .post(contactUsController.postContactUsMessage)
   .get(
-    verifyJWT,
+    protectRoute,
     verifyUserRole("ADMIN"),
     contactUsController.getAllContactUsMessages
   );
