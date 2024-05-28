@@ -1,9 +1,11 @@
 const Cart = require("../model/Cart");
+const Product = require("../model/Product");
 
 const addToCart = async (req, res) => {
   try {
-    const { user, productId } = req.body;
-    if (!productId || !user) {
+    const { productId } = req.body;
+    const user = req.userId;
+    if (!productId) {
       return res.status(400).json({ message: "productId and user required" });
     }
 
@@ -14,21 +16,15 @@ const addToCart = async (req, res) => {
     }
 
     // Check if the product already exists in the cart
-    const existingProductIndex = cart.products.findIndex(
-      (p) => p.productId === productId
-    );
-    if (existingProductIndex !== -1) {
-      return res
-        .status(400)
-        .json({ message: "Product already exists in cart" });
+    if (cart.products.includes(productId)) {
+      return res.status(400).json({ message: "Product already exists in cart" });
     } else {
-      cart.products.push({ productId });
+      cart.products.push(productId);
     }
     await cart.save();
-    await cart.populate("products.productId");
-    res
-      .status(200)
-      .json({ message: "Product added to cart successfully", cart });
+    const createdProduct = await Product.findById(productId);
+    // await cart.populate("products.productId");
+    res.status(200).json({ message: "Product added to cart successfully",product:createdProduct});
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log("Error in addToCart controller: ", error.message);
@@ -44,13 +40,18 @@ const getCart = async (req, res) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const cart = await Cart.findOne({ user }).populate("products.productId");
+    const cart = await Cart.findOne({ user }).populate("products");
 
     if (!cart) {
-      return res.status(404).json({ message: "Cart not found" });
+      return res.status(200).json([]);
     }
 
-    res.status(200).json({ message: "Cart retrieved successfully", cart });
+    res
+      .status(200)
+      .json({
+        message: "Cart retrieved successfully",
+        products: cart.products,
+      });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log("Error in getCart controller: ", error.message);
@@ -76,7 +77,7 @@ const removeFromCart = async (req, res) => {
 
     // Remove the product from the cart
     cart.products = cart.products.filter(
-      (product) => product.productId.toString() !== productId
+      (product) => product.toString() !== productId
     );
     await cart.save();
 

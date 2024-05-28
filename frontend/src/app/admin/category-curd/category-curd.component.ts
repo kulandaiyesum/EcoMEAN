@@ -1,4 +1,4 @@
-import { Category } from './../../model/category';
+import { Category } from '../../model/category';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,

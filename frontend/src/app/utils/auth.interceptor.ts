@@ -8,10 +8,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const userAuthService = inject(UserAuthService);
   const token = userAuthService.getUser();
   const router = inject(Router);
-  // const authReq = req.clone({
-  //   withCredentials: true, // Add withCredentials option
-  // });
-  return next(req).pipe(
+  const authReq = req.clone({
+    withCredentials: true, // Add withCredentials option
+  });
+  return next(authReq).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
         router.navigate(['/login']);

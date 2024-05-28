@@ -2,19 +2,24 @@
   <div
     class="group border-gray-100/30 flex w-full max-w-xs flex-col self-center overflow-hidden rounded-lg border dark:bg-gray-700 shadow-md min-w-[300px] sm:min-w-[330px] md:min-w-[300px]"
   >
-    <a class="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
+    <div class="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
       <img
         class="absolute top-0 right-0 h-full w-full object-cover"
-        ngSrc="{{ product.images[0] }}"
+        src="{{ product.images[0] }}"
         alt="{{ product.name }}"
         fill
         priority
       />
-      <!-- <span
+      <span
         class="absolute top-0 left-0 m-2 rounded-full bg-black dark:bg-gray-700 px-2 text-center text-sm font-medium text-white"
-        >39% OFF</span
-      > -->
-    </a>
+        >{{
+          ((product.actualPrice - product.discountedPrice) /
+            product.actualPrice) *
+            100 | number : "1.0-1"
+        }}
+        OFF</span
+      >
+    </div>
     <div class="mt-4 px-5 pb-5">
       <a href="#">
         <h5 class="text-xl tracking-tight dark:text-white">
@@ -31,9 +36,10 @@
           }}</span>
         </p>
       </div>
-      <a
-        href="#"
-        class="hover:border-white/40 flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300"
+      <button
+        [disabled]="!isUser()"
+        (click)="addToCart()"
+        class="hover:border-white/40 flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:hover:cursor-default"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +55,8 @@
             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
           />
         </svg>
-        Add to cart</a
-      >
+        Add to cart
+      </button>
     </div>
   </div>
 </div>

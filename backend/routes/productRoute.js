@@ -8,13 +8,23 @@ router.route("/products").get(productController.getProductByPages);
 router.route("/products/all").get(productController.getAllProducts);
 router.route("/products/:id").get(productController.getProductById);
 
-router.use(protectRoute, verifyUserRole("ADMIN"));
-
-router.route("/products").post(productController.createProduct);
-router.route("/products/bulk").post(productController.createProductsBulk);
+router
+  .route("/products")
+  .post(protectRoute, verifyUserRole("ADMIN"), productController.createProduct);
+router
+  .route("/products/bulk")
+  .post(
+    protectRoute,
+    verifyUserRole("ADMIN"),
+    productController.createProductsBulk
+  );
 router
   .route("/products/:id")
-  .put(productController.updateProduct)
-  .delete(productController.deleteProduct);
+  .put(protectRoute, verifyUserRole("ADMIN"), productController.updateProduct)
+  .delete(
+    protectRoute,
+    verifyUserRole("ADMIN"),
+    productController.deleteProduct
+  );
 
 module.exports = router;

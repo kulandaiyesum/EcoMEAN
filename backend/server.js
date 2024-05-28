@@ -1,6 +1,6 @@
 require("dotenv").config({ path: ".env." + process.env.NODE_ENV.trim() });
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
@@ -18,12 +18,12 @@ app.use(logger);
 
 app.use(credentials);
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:4200",
-//     // credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -32,12 +32,13 @@ createAdminIfNotExists();
 app.get("/api/test", (req, res) => {
   res.send("API works");
 });
-app.use("/api/", require("./routes/authRoute.js"));
-app.use("/api/", require("./routes/categoryRoute.js"));
+app.use("/api", require("./routes/authRoute.js"));
+app.use("/api", require("./routes/categoryRoute.js"));
 app.use("/api/user", protectRoute, require("./routes/userRoute.js"));
-app.use("/api/", require("./routes/productRoute.js"));
+app.use("/api", require("./routes/productRoute.js"));
 app.use("/api/contactus", require("./routes/contactUsRoute.js"));
 app.use("/api/cart", require("./routes/cartRoute.js"));
+app.use("/api/address", require("./routes/addressRoute.js"));
 
 mongoose.connection.once("open", () => {
   console.log("Connect to mangoDB");

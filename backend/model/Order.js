@@ -14,6 +14,12 @@ const orderSchema = new mongoose.Schema({
     enum: ["pending", "completed", "shipped"],
     default: "pending",
   },
+  address: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Address",
+    required: true,
+  },
+  paymentId: { type: String }, // This will store the Razorpay payment ID
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

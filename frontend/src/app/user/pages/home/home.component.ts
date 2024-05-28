@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { ProductComponent } from '../../components/product/product.component';
 import { NgFor } from '@angular/common';
@@ -16,11 +16,11 @@ export class HomeComponent implements OnInit {
   num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   private productService = inject(ProductService);
   products: Product[] = [];
-  loading : boolean = false;
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.loading = true;
-    this.getProducts(); 
+    this.getProducts();
     this.loading = false;
   }
   getProducts(): void {

@@ -1,13 +1,13 @@
-<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+<section class="py-8 antialiased md:py-16">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-      Shopping Cart
+      Shopping Cart {{ products.length }}
     </h2>
 
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
       <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
-          @for (item of num; track $index) {
+          @for (item of products; track $index) {
 
           <div
             class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6"
@@ -15,18 +15,13 @@
             <div
               class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0"
             >
-              <a href="#" class="shrink-0 md:order-1">
+              <div class="shrink-0 md:order-1">
                 <img
-                  class="h-20 w-20 dark:hidden"
-                  src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-                  alt="imac image"
+                  class="h-20 w-20"
+                  [src]="item.images[0]"
+                  [alt]="item.name"
                 />
-                <img
-                  class="hidden h-20 w-20 dark:block"
-                  src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                  alt="imac image"
-                />
-              </a>
+              </div>
 
               <label for="counter-input" class="sr-only"
                 >Choose quantity:</label
@@ -91,7 +86,7 @@
                 </div>
                 <div class="text-end md:order-4 md:w-32">
                   <p class="text-base font-bold text-gray-900 dark:text-white">
-                    $1,499
+                    {{ item.discountedPrice }}
                   </p>
                 </div>
               </div>
@@ -99,41 +94,16 @@
               <div
                 class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md"
               >
-                <a
-                  href="#"
+                <div
                   class="text-base font-medium text-gray-900 hover:underline dark:text-white"
-                  >PC system All in One APPLE iMac (2023) mqrq3ro/a, Apple M3,
-                  24" Retina 4.5K, 8GB, SSD 256GB, 10-core GPU, Keyboard layout
-                  INT</a
                 >
+                  {{ item.description }}
+                </div>
 
                 <div class="flex items-center gap-4">
                   <button
                     type="button"
-                    class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
-                  >
-                    <svg
-                      class="me-1.5 h-5 w-5"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-                      />
-                    </svg>
-                    Add to Favorites
-                  </button>
-
-                  <button
-                    type="button"
+                    (click)="removeFromCart(item._id)"
                     class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
                   >
                     <svg
@@ -239,8 +209,7 @@
               or
             </span>
             <a
-              href="#"
-              title=""
+              routerLink="/"
               class="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline hover:no-underline dark:text-blue-500"
             >
               Continue Shopping
@@ -261,34 +230,6 @@
               </svg>
             </a>
           </div>
-        </div>
-
-        <div
-          class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6"
-        >
-          <form class="space-y-4">
-            <div>
-              <label
-                for="voucher"
-                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Do you have a voucher or gift card?
-              </label>
-              <input
-                type="text"
-                id="voucher"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder=""
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Apply Code
-            </button>
-          </form>
         </div>
       </div>
     </div>

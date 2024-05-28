@@ -49,18 +49,18 @@ export class UserAuthService {
     this.http.post(this.apiEndPoint + '/logout', {}).subscribe({
       next: (res: any) => {
         localStorage.removeItem('user');
-        Swal.fire({
-          title: 'Error!',
-          html: `<span class='dark:text-white'>${res?.message}</span>`,
-          icon: 'error',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#1d4ed8',
-          customClass: {
-            popup: theme === 'dark' ? '!bg-gray-700' : '!bg-gray-50',
-            title: theme === 'dark' ? '!text-white' : '',
-            confirmButton: '!bg-blue-600 !hover:bg-blue-700',
-          },
-        });
+        // Swal.fire({
+        //   title: 'Logout',
+        //   html: `<span class='dark:text-white'>${res?.message}</span>`,
+        //   icon: 'success',
+        //   confirmButtonText: 'Ok',
+        //   confirmButtonColor: '#1d4ed8',
+        //   customClass: {
+        //     popup: theme === 'dark' ? '!bg-gray-700' : '!bg-gray-50',
+        //     title: theme === 'dark' ? '!text-white' : '',
+        //     confirmButton: '!bg-blue-600 !hover:bg-blue-700',
+        //   },
+        // });
       },
       error: (err: any) => {
         Swal.fire({
