@@ -1,5 +1,5 @@
 const Product = require("../model/Product");
-const Category = require("../model/Category");
+const Cart = require("../model/Cart");
 // const mongoose = require("mongoose");
 
 const createProduct = async (req, res) => {
@@ -53,7 +53,7 @@ const getProductById = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.json(product);
+    res.status(200).json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -85,8 +85,6 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-
-
 const getProductByPages = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
@@ -110,6 +108,28 @@ const getProductByPages = async (req, res) => {
   }
 };
 
+const getProductDetails = async (req, res) => {
+  try {
+    const { isSingleProductCheckout, productId } = req.params;
+    const user = req.userId;
+    if (isSingleProductCheckout && productId && productId !== "null") {
+      const product = await Product.findById(productId);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.status(200).json([product]);
+    } else {
+      const cart = await Cart.findOne({ user }).populate("products");
+      if (!cart) {
+        return res.status(200).json([]);
+      }
+      res.status(200).json(cart.products);
+    }
+  } catch (error) {
+    console.log("error in getProductDetails is", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   createProduct,
@@ -118,5 +138,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   createProductsBulk,
-  getProductByPages
+  getProductByPages,
+  getProductDetails,
 };

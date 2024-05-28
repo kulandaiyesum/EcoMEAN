@@ -2,10 +2,8 @@ import { CartService } from './../../../services/cart.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Product } from '../../../model/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import Swal from 'sweetalert2';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -18,8 +16,8 @@ import { CurrencyPipe } from '@angular/common';
 export class ProductViewComponent implements OnInit {
   private titleService = inject(Title);
   private activatedRoute = inject(ActivatedRoute);
-  private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private router = inject(Router);
   selectedProductImageIndex: number = 0;
   product: Product = {
     name: '',
@@ -32,33 +30,8 @@ export class ProductViewComponent implements OnInit {
     images: [],
   };
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((params: any) => {
-      const productId = params.get('id');
-      if (productId) {
-        this.productService.getProductById(productId).subscribe({
-          next: (product: any) => {
-            this.product = product;
-            this.titleService.setTitle(`${product.name} - EcoMEAN`);
-            console.log('product is :', this.product); // Setting the title without Title service
-          },
-          error: (err: HttpErrorResponse) => {
-            const theme = localStorage.getItem('theme');
-            Swal.fire({
-              title: 'Error!',
-              html: `<span class='dark:text-white'>${err?.error?.message}</span>`,
-              icon: 'error',
-              confirmButtonText: 'Ok',
-              confirmButtonColor: '#1d4ed8',
-              customClass: {
-                popup: theme === 'dark' ? '!bg-gray-700' : '!bg-gray-50',
-                title: theme === 'dark' ? '!text-white' : '',
-                confirmButton: '!bg-blue-600 !hover:bg-blue-700',
-              },
-            });
-          },
-        });
-      }
-    });
+    this.product = this.activatedRoute.snapshot.data['product'];
+    this.titleService.setTitle(`${this.product.name} - EcoMEAN`);
   }
 
   changeImageIndex(index: number): void {
@@ -66,5 +39,14 @@ export class ProductViewComponent implements OnInit {
   }
   addToCart(productId?: string) {
     if (productId) this.cartService.addToCart(productId);
+  }
+  buyProduct() {
+    this.router.navigate([
+      '/buyProduct',
+      {
+        isSingleProductCheckout: true,
+        id: this.product._id,
+      },
+    ]);
   }
 }

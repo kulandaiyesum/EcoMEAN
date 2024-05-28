@@ -71,4 +71,13 @@ export class ProductService {
       })
     );
   }
+
+  public getProductDetails(
+    isSingleProductCheckout: boolean,
+    productId: string | null
+  ) {
+    return this.http.get<Product[]>(
+      `${this.apiEndPoint}/productDetails/${isSingleProductCheckout}/${productId}`
+    );
+  }
 }

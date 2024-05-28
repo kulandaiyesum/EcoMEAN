@@ -7,6 +7,13 @@ const verifyUserRole = require("../middleware/verifyUserRole");
 router.route("/products").get(productController.getProductByPages);
 router.route("/products/all").get(productController.getAllProducts);
 router.route("/products/:id").get(productController.getProductById);
+router
+  .route("/productDetails/:isSingleProductCheckout/:productId")
+  .get(
+    protectRoute,
+    verifyUserRole("USER"),
+    productController.getProductDetails
+  );
 
 router
   .route("/products")

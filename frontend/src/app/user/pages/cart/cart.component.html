@@ -78,11 +78,12 @@
           <div
             class="flex justify-end items-center max-md:flex-col max-md:justify-center"
           >
-            <a
-              href="#"
-              class="flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >Proceed to Checkout</a
+            <button
+              (click)="buyProduct()"
+              class="flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
             >
+              Proceed to Checkout
+            </button>
 
             <span
               class="text-sm font-normal text-gray-500 dark:text-gray-400 mx-4 max-md:my-4"

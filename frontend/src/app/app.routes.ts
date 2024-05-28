@@ -16,6 +16,9 @@ import { ProductsComponent } from './admin/products/products.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { CartComponent } from './user/pages/cart/cart.component';
 import { ProductViewComponent } from './user/pages/product-view/product-view.component';
+import { BuyProductComponent } from './user/pages/buy-product/buy-product.component';
+import { productResolver } from './utils/product.resolver';
+import { buyProductResolver } from './utils/buy-product.resolver';
 
 export const routes: Routes = [
   {
@@ -39,6 +42,16 @@ export const routes: Routes = [
       {
         path: 'product/:id',
         component: ProductViewComponent,
+        resolve: {
+          product: productResolver,
+        },
+      },
+      {
+        path: 'buyProduct',
+        component: BuyProductComponent,
+        resolve: {
+          productDetails: buyProductResolver,
+        },
       },
     ],
   },
