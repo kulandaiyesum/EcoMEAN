@@ -6,11 +6,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Subject, takeUntil } from 'rxjs';
 import { UserAuthService } from '../../../services/user-auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CurrencyPipe, NgOptimizedImage, DecimalPipe],
+  imports: [CurrencyPipe, NgOptimizedImage, DecimalPipe, RouterLink],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
@@ -28,7 +29,6 @@ export class ProductComponent implements OnDestroy {
   }
 
   addToCart() {
-    if(this.product._id)
-    this.cartService.addToCart(this.product._id);
+    if (this.product._id) this.cartService.addToCart(this.product._id);
   }
 }

@@ -3,11 +3,12 @@ import { CartService } from '../../../services/cart.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Product } from '../../../model/product';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CurrencyPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })

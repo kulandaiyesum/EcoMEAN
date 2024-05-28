@@ -15,6 +15,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProductsComponent } from './admin/products/products.component';
 import { CategoryComponent } from './admin/category/category.component';
 import { CartComponent } from './user/pages/cart/cart.component';
+import { ProductViewComponent } from './user/pages/product-view/product-view.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,10 @@ export const routes: Routes = [
         title: 'Cart - EcoMEAN',
         canActivate: [routeGuard],
         data: { role: 'USER' },
+      },
+      {
+        path: 'product/:id',
+        component: ProductViewComponent,
       },
     ],
   },

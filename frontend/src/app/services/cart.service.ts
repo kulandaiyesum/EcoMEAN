@@ -62,6 +62,18 @@ export class CartService implements OnDestroy {
           const curentCartItems = this.cartSubject.getValue();
           const updatedCartItems = [...curentCartItems, newProduct];
           this.cartSubject.next(updatedCartItems);
+          Swal.fire({
+            title: 'Success',
+            html: `<span class='dark:text-white'>${res?.message}</span>`,
+            icon: 'success',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#1d4ed8',
+            customClass: {
+              popup: theme === 'dark' ? '!bg-gray-700' : '!bg-gray-50',
+              title: theme === 'dark' ? '!text-white' : '',
+              confirmButton: '!bg-blue-600 !hover:bg-blue-700',
+            },
+          });
         },
         error: (err: any) => {
           if (err?.error?.message) {
