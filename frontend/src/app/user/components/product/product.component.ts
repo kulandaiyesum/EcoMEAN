@@ -29,6 +29,6 @@ export class ProductComponent implements OnDestroy {
   }
 
   addToCart() {
-    if (this.product._id) this.cartService.addToCart(this.product._id);
+    if (this.product._id) this.cartService.addToCart(this.product._id, 1, 'increment');
   }
 }

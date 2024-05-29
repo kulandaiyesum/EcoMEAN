@@ -117,7 +117,7 @@ const getProductDetails = async (req, res) => {
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
-      res.status(200).json([product]);
+      res.status(200).json([{ product, quantity: 1 }]);
     } else {
       const cart = await Cart.findOne({ user }).populate("products");
       if (!cart) {

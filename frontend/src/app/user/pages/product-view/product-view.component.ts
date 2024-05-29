@@ -38,7 +38,7 @@ export class ProductViewComponent implements OnInit {
     this.selectedProductImageIndex = index;
   }
   addToCart(productId?: string) {
-    if (productId) this.cartService.addToCart(productId);
+    if (productId) this.cartService.addToCart(productId, 1, 'increment');
   }
   buyProduct() {
     this.router.navigate([

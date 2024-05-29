@@ -1,23 +1,15 @@
 import { Product } from './product';
 
 export interface orderDetails {
+  _id?:string;
+  user?:string;
   address: string;
-  orderProductQuantityList: OrderProductQuantityList[];
+  productQuantityList: ProductQuantityList[];
+  totalPrice: number;
+  paymentId: string
 }
-export interface OrderProductQuantityList {
+export interface ProductQuantityList {
+  _id?:string;
   product: Product;
   queantity: number;
-}
-
-export interface Address {
-  name: string;
-  addresslineOne: string;
-  addressLineTwo?: string; //optional
-  street: string;
-  phoneNumber: string;
-  alternativePhoneNumber: string; //optional
-  city: string;
-  state: string;
-  postalCode: string;
-  landMark: string;
 }

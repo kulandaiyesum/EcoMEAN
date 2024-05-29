@@ -5,11 +5,14 @@ import { Observable } from 'rxjs';
 import { Product } from '../model/product';
 
 export const buyProductResolver: ResolveFn<
-  Product[] | Observable<Product[]>
+  Product[] | Observable<Product[]> | Object
 > = (route, state) => {
   const productService = inject(ProductService);
   const isSingleProductCheckout =
     route.paramMap.get('isSingleProductCheckout') === 'true';
   const id = route.paramMap.get('id') || null;
-  return productService.getProductDetails(isSingleProductCheckout, id);
+  if (isSingleProductCheckout === true) {
+    return productService.getProductDetails(isSingleProductCheckout, id);
+  }
+  return null as unknown as Object;
 };

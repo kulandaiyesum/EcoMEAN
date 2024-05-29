@@ -3,30 +3,47 @@ const Product = require("../model/Product");
 
 const addToCart = async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { productId, quantity, updateType } = req.body;
     const user = req.userId;
-    if (!productId) {
-      return res.status(400).json({ message: "productId and user required" });
+
+    if (!productId || !quantity || !updateType) {
+      return res.status(400).json({ message: "productId, quantity and updateType are required" });
     }
 
     let cart = await Cart.findOne({ user });
-    //  checking cart is already available for this user
     if (!cart) {
       cart = new Cart({ user, products: [] });
     }
 
-    // Check if the product already exists in the cart
-    if (cart.products.includes(productId)) {
-      return res.status(400).json({ message: "Product already exists in cart" });
+    const productIndex = cart.products.findIndex(
+      (item) => item.product.toString() === productId
+    );
+
+    if (productIndex > -1) {
+      if (updateType === 'increment') {
+        cart.products[productIndex].quantity += quantity;
+      } else if (updateType === 'absolute') {
+        cart.products[productIndex].quantity = quantity;
+      }
+      if (cart.products[productIndex].quantity <= 0) {
+        cart.products.splice(productIndex, 1);
+      }
     } else {
-      cart.products.push(productId);
+      cart.products.push({ product: productId, quantity });
     }
+
     await cart.save();
     const createdProduct = await Product.findById(productId);
-    // await cart.populate("products.productId");
-    res.status(200).json({ message: "Product added to cart successfully",product:createdProduct});
+    const responseProduct = {
+      product: createdProduct,
+      quantity: productIndex > -1 ? cart.products[productIndex].quantity : quantity,
+    };
+
+    res.status(200).json({
+      message: "Product added to cart successfully",
+      product: responseProduct,
+    });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log("Error in addToCart controller: ", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
@@ -40,20 +57,17 @@ const getCart = async (req, res) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const cart = await Cart.findOne({ user }).populate("products");
+    const cart = await Cart.findOne({ user }).populate("products.product");
 
     if (!cart) {
       return res.status(200).json([]);
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Cart retrieved successfully",
-        products: cart.products,
-      });
+    res.status(200).json({
+      message: "Cart retrieved successfully",
+      products: cart.products,
+    });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log("Error in getCart controller: ", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
@@ -61,8 +75,9 @@ const getCart = async (req, res) => {
 
 const removeFromCart = async (req, res) => {
   try {
-    const { userId } = req;
+    const userId = req.userId;
     const { productId } = req.params;
+
     if (!userId) {
       return res.status(401).json({ message: "User not authenticated" });
     }
@@ -77,13 +92,12 @@ const removeFromCart = async (req, res) => {
 
     // Remove the product from the cart
     cart.products = cart.products.filter(
-      (product) => product.toString() !== productId
+      (item) => item.product.toString() !== productId
     );
     await cart.save();
 
     res.status(200).json({ message: "Product removed from cart successfully" });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log("Error in removeFromCart controller: ", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
