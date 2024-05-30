@@ -1,15 +1,11 @@
-import { Product } from './product';
+import { CartProduct } from './cart';
 
-export interface orderDetails {
-  _id?:string;
-  user?:string;
+export interface OrderDetails {
+  _id?: string;
+  user?: string;
   address: string;
-  productQuantityList: ProductQuantityList[];
+  products: CartProduct[];
   totalPrice: number;
-  paymentId: string
-}
-export interface ProductQuantityList {
-  _id?:string;
-  product: Product;
-  queantity: number;
+  paymentId: string;
+  status?: string;
 }

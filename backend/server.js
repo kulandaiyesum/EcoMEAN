@@ -39,6 +39,7 @@ app.use("/api", require("./routes/productRoute.js"));
 app.use("/api/contactus", require("./routes/contactUsRoute.js"));
 app.use("/api/cart", require("./routes/cartRoute.js"));
 app.use("/api/address", require("./routes/addressRoute.js"));
+app.use("/api", require("./routes/paymentRoute.js"));
 
 mongoose.connection.once("open", () => {
   console.log("Connect to mangoDB");

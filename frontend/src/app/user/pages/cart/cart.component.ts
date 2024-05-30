@@ -42,11 +42,13 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   increseQantity(item: CartProduct) {
     if (item.product._id)
-      this.cartService.addToCart(item.product._id, 1, 'increment');
+      if (item.quantity === 5) return;
+      else this.cartService.addToCart(item.product._id, 1, 'increment');
   }
   decreseQantity(item: CartProduct) {
     if (item.product._id)
-      this.cartService.addToCart(item.product._id, -1, 'increment');
+      if (item.quantity === 1) return;
+      else this.cartService.addToCart(item.product._id, -1, 'increment');
   }
   buyProduct() {
     this.router.navigate([

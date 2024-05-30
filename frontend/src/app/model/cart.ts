@@ -1,10 +1,11 @@
-import { Product } from "./product";
+import { Product } from './product';
 
 export interface CartProduct {
+  _id?: string;
   product: Product;
   quantity: number;
 }
 export interface Cart {
-  user: string; 
+  user: string;
   products: CartProduct[];
 }

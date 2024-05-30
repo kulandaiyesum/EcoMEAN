@@ -19,6 +19,8 @@ import { ProductViewComponent } from './user/pages/product-view/product-view.com
 import { BuyProductComponent } from './user/pages/buy-product/buy-product.component';
 import { productResolver } from './utils/product.resolver';
 import { buyProductResolver } from './utils/buy-product.resolver';
+import { SuccessComponent } from './user/pages/success/success.component';
+import { FailedComponent } from './user/pages/failed/failed.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +44,8 @@ export const routes: Routes = [
       {
         path: 'product/:id',
         component: ProductViewComponent,
+        canActivate: [routeGuard],
+        data: { role: 'USER' },
         resolve: {
           product: productResolver,
         },
@@ -49,9 +53,21 @@ export const routes: Routes = [
       {
         path: 'buyProduct',
         component: BuyProductComponent,
+        canActivate: [routeGuard],
+        data: { role: 'USER' },
         resolve: {
           productDetails: buyProductResolver,
         },
+      },
+      {
+        path: 'success',
+        component: SuccessComponent,
+        title: 'Payment success - EcoMEAN',
+      },
+      {
+        path: 'failure',
+        component: FailedComponent,
+        title: 'Payment failed -EcoMEAN',
       },
     ],
   },

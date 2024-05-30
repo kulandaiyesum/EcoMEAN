@@ -1,9 +1,9 @@
 <section class="py-8 antialiased md:py-16">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-      Shopping Cart {{ cartProducts.length }}
+      Shopping Cart
     </h2>
-
+    @if(cartProducts.length > 0) {
     <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
       <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
@@ -69,6 +69,7 @@
                   <button
                     type="button"
                     class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                    (click)="removeFromCart(item.product._id)"
                   >
                     <svg
                       class="me-1.5 h-5 w-5"
@@ -95,44 +96,44 @@
           </div>
           }
           <!-- <div
-            class="flex justify-end items-center max-md:flex-col max-md:justify-center"
-          >
-            <button
-              (click)="buyProduct()"
-              class="flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
+              class="flex justify-end items-center max-md:flex-col max-md:justify-center"
             >
-              Proceed to Checkout
-            </button>
-
-            <span
-              class="text-sm font-normal text-gray-500 dark:text-gray-400 mx-4 max-md:my-4"
-            >
-              or
-            </span>
-            <div class="flex items-center justify-center gap-2">
-              <a
-                routerLink="/"
-                class="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline hover:no-underline dark:text-blue-500"
+              <button
+                (click)="buyProduct()"
+                class="flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
               >
-                Continue Shopping
-                <svg
-                  class="h-5 w-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
+                Proceed to Checkout
+              </button>
+  
+              <span
+                class="text-sm font-normal text-gray-500 dark:text-gray-400 mx-4 max-md:my-4"
+              >
+                or
+              </span>
+              <div class="flex items-center justify-center gap-2">
+                <a
+                  routerLink="/"
+                  class="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline hover:no-underline dark:text-blue-500"
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 12H5m14 0-4 4m4-4-4-4"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div> -->
+                  Continue Shopping
+                  <svg
+                    class="h-5 w-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 12H5m14 0-4 4m4-4-4-4"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div> -->
         </div>
       </div>
       <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
@@ -219,5 +220,49 @@
         </div>
       </div>
     </div>
+    } @else {
+    <div class="">
+      <div class="p-6 md:mx-auto">
+        <svg
+          class="w-20 h-20 mx-auto my-6 text-blue-600"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+          />
+        </svg>
+
+        <div class="text-center">
+          <h3
+            class="md:text-2xl text-base text-gray-900 font-semibold text-center dark:text-white"
+          >
+            Your Cart is Empty
+          </h3>
+          <p class="text-gray-600 my-2 dark:text-gray-400">
+            Add something to make me happy <span class="font-semibold">:)</span>
+          </p>
+          <p class="dark:text-white">Have a great day!</p>
+          <div class="py-10 text-center">
+            <a
+              routerLink="/"
+              class="px-12 rounded bg-blue-600 hover:bg-blule-500 text-white py-3"
+            >
+              Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    }
   </div>
 </section>
