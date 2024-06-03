@@ -58,7 +58,6 @@
               required
               #password="ngModel"
               minlength="8"
-              pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}"
             />
             <div
               *ngIf="password.touched && password.invalid"
@@ -70,9 +69,9 @@
               <span *ngIf="password.errors?.['minlength']"
                 >Password must be at least 8 characters long.</span
               >
-              <span *ngIf="password.errors?.['pattern']"
+              <!-- <span *ngIf="password.errors?.['pattern']"
                 >Please enter a valid password</span
-              >
+              > -->
             </div>
           </div>
           <div class="flex items-center justify-between">
