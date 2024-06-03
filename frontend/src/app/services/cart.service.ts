@@ -35,7 +35,7 @@ export class CartService implements OnDestroy {
         },
         error: (err: any) => {
           if (err?.error?.message) {
-            this.showError(err.error.message, theme);
+            // this.showError(err.error.message, theme);
           }
         },
       });

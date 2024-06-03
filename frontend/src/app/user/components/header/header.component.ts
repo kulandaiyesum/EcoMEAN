@@ -1,7 +1,7 @@
 import { UserAuthService } from './../../../services/user-auth.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { ThemeService } from '../../../services/theme.service';
 import { User } from '../../../model/user';
@@ -20,11 +20,13 @@ export class HeaderComponent implements OnInit {
   private userAuthService = inject(UserAuthService);
   private themeService = inject(ThemeService);
   private cartService = inject(CartService);
+  private router = inject(Router);
   cartItemsCount: number = 0;
 
   ngOnInit(): void {
     this.user = this.userAuthService.getUser();
     if (this.user) {
+      if (this.user.role === 'ADMIN') this.router.navigate(['/admin']);
       this.cartService.getCartDetails();
       this.cartService.cartData$.subscribe((data) => {
         this.cartItemsCount = data.length;
