@@ -17,7 +17,7 @@ const sendVerificationEmailForRegisteredUser = (user, token) => {
         <h2 style="color: #007bff;">Email Verification</h2>
         <p>Hello ${user.name},</p>
         <p>Welcome to our platform! To complete your registration, please click the button below to verify your email address:</p>
-        <a href="${process.env.BACK_END_PORT}/verify/${token}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px;">Verify Email</a>
+        <a href="${process.env.BACK_END_PORT}/api/verify/${token}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px;">Verify Email</a>
         <p>If you did not sign up for an account, you can ignore this email.</p>
         <p>Thank you,</p>
         <p>The Team</p>
