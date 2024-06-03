@@ -4,4 +4,6 @@ export interface User {
   role: string; // USER or ADMIN
   password?: string;
   email: string;
+  verified?: boolean;
+  createdAt?: Date;
 }

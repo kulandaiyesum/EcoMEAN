@@ -43,6 +43,7 @@ export class AdminComponent {
     { name: 'Dashboard', link: 'dashboard' },
     { name: 'Category', link: 'category' },
     { name: 'Products', link: 'products' },
+    { name: 'Orders', link: 'orders' },
   ];
 
   constructor() {}

@@ -7,5 +7,7 @@ export interface OrderDetails {
   products: CartProduct[];
   totalPrice: number;
   paymentId: string;
-  status?: string;
+  status?: 'placed' | 'completed';
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -23,7 +23,7 @@ const createOrder = async (req, res) => {
     res.status(500).send(error);
   }
 };
-
+ 
 const verifyAndPlaceOrder = async (req, res) => {
   try {
     const {
@@ -49,8 +49,11 @@ const verifyAndPlaceOrder = async (req, res) => {
       });
 
       await newOrder.save();
-      
-      if (isSingleProductCheckout === true || isSingleProductCheckout === 'true') {
+
+      if (
+        isSingleProductCheckout === true ||
+        isSingleProductCheckout === "true"
+      ) {
         // Emplty block
       } else {
         await Cart.findOneAndUpdate({ user }, { products: [] });
@@ -66,7 +69,42 @@ const verifyAndPlaceOrder = async (req, res) => {
   }
 };
 
+const getOrderDetails = async (req, res) => {
+  try {
+    const orders = await Order.find().populate("products.product");
+    if (!orders) {
+      return res.status(200).json([]);
+    }
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("Error in getOrderDetails controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const markAsDelivered = async (req, res) => {
+  try {
+    const { orderId } = req.body;
+    const status = "completed";
+
+    const updatedOrder = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { status },
+      { new: true }
+    );
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.status(200).json(updatedOrder);
+  } catch (error) {
+    console.error("Error in markAsDelivered controller: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   createOrder,
   verifyAndPlaceOrder,
+  getOrderDetails,
+  markAsDelivered,
 };

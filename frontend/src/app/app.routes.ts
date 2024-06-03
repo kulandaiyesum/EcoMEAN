@@ -21,6 +21,7 @@ import { productResolver } from './utils/product.resolver';
 import { buyProductResolver } from './utils/buy-product.resolver';
 import { SuccessComponent } from './user/pages/success/success.component';
 import { FailedComponent } from './user/pages/failed/failed.component';
+import { OrdersComponent } from './admin/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -81,6 +82,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'category', component: CategoryComponent },
+      { path: 'orders', component: OrdersComponent },
     ],
   },
 
