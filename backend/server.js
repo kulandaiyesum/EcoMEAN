@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 // const corsOptions = require("./config/corsOptions");
 const app = express();
@@ -41,6 +42,12 @@ app.use("/api/cart", require("./routes/cartRoute.js"));
 app.use("/api/address", require("./routes/addressRoute.js"));
 app.use("/api", require("./routes/paymentRoute.js"));
 
+app.use(express.static(path.join(__dirname, "../frontend/dist/browser")));
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend", "dist", "browser", "index.html")
+  );
+});
 mongoose.connection.once("open", () => {
   console.log("Connect to mangoDB");
   app.listen(PORT, () =>
