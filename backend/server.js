@@ -10,12 +10,12 @@ const app = express();
 const PORT = process.env.PORT;
 const { createAdminIfNotExists } = require("./controllers/createAdmin");
 const credentials = require("./middleware/credentials");
-const logger = require("./middleware/logEvent");
+// const logger = require("./middleware/logEvent");
 const { protectRoute } = require("./middleware/verifyJWT.js");
 const connectDB = require("./config/dbConn");
 
 connectDB();
-app.use(logger);
+// app.use(logger);
 
 app.use(credentials);
 
