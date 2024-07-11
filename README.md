@@ -15,8 +15,8 @@ Before you begin, ensure you have the following installed on your machine:
 
 ### Clone the Repository
   ``` bash
-  git clone https://github.com/yourusername/your-repo-name.git
-  cd your-repo-name
+  git clone https://github.com/kulandaiyesum/EcoMEAN.git
+  cd EcomMEAN
   ```
 
 ## Backend Setup
